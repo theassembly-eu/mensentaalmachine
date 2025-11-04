@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import OpenAI from 'openai';
+import DictionaryEntry from './models/DictionaryEntry.js'; // Import the new model
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -38,6 +39,44 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from backend!' });
 });
 
+// Dictionary CRUD routes
+app.post('/api/dictionary', async (req, res) => {
+  try {
+    const newEntry = new DictionaryEntry(req.body);
+    await newEntry.save();
+    res.status(201).json(newEntry);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.get('/api/dictionary', async (req, res) => {
+  try {
+    const entries = await DictionaryEntry.find();
+    res.json(entries);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.put('/api/dictionary/:id', async (req, res) => {
+  try {
+    const updatedEntry = await DictionaryEntry.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updatedEntry);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.delete('/api/dictionary/:id', async (req, res) => {
+  try {
+    await DictionaryEntry.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Entry deleted' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 app.post('/api/simplify', async (req, res) => {
   const { text, language = 'Dutch', targetAudience = 'Algemeen', outputFormat = 'Samenvatting' } = req.body; // Default to Dutch, Algemeen, and Samenvatting
 
@@ -64,6 +103,21 @@ app.post('/api/simplify', async (req, res) => {
 
   if (outputFormat === 'Opsommingstekens') {
     listAvoidance = ''; // Allow bullet points if requested
+  }
+
+  // Fetch dictionary entries
+  let dictionaryTerms = '';
+  try {
+    const entries = await DictionaryEntry.find();
+    if (entries.length > 0) {
+      dictionaryTerms = '\n\nUse the following dictionary for simplification:';
+      entries.forEach(entry => {
+        dictionaryTerms += `\n- ${entry.originalTerm}: ${entry.simplifiedTerm}`;
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching dictionary entries:', error);
+    // Continue without dictionary if there's an error
   }
 
   switch (outputFormat) {
@@ -96,6 +150,7 @@ app.post('/api/simplify', async (req, res) => {
     Concluding Message: Conclude with a clear, impactful message.
     ---
     ${formatInstruction}
+    ${dictionaryTerms}
 
     Please simplify the following ${language} text and respond in ${language}. Ensure the tone is strongly connotated and impactful. ${imageSuggestion}
 
