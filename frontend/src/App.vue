@@ -7,7 +7,7 @@ const selectedLanguage = ref('Dutch'); // New ref for selected language
 const selectedTargetAudience = ref('Algemeen'); // New ref for selected target audience
 const selectedOutputFormat = ref('Samenvatting'); // New ref for selected output format
 
-const appVersion = ref('1.0.0'); // Set app version from package.json
+const appVersion = ref('1.0.1'); // Set app version from package.json
 
 // Dictionary management refs
 const dictionaryEntries = ref([]);
