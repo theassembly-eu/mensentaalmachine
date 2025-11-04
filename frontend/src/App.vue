@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 
 const inputText = ref('');
-const simplifiedText = ref('');
+const simplifiedText = ref(''); // Added comment to force rebuild
 const message = ref('Hello from frontend!');
 const backendMessage = ref('');
 
