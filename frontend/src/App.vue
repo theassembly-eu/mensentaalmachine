@@ -43,10 +43,13 @@ async function addDictionaryEntry() {
       newSimplifiedTerm.value = '';
       fetchDictionaryEntries(); // Refresh the list
     } else {
-      console.error('Fout bij toevoegen woordenboek item:', await response.text());
+      const errorText = await response.text();
+      console.error('Fout bij toevoegen woordenboek item:', errorText);
+      alert(`Fout bij toevoegen: ${errorText}`);
     }
   } catch (error) {
     console.error('Fout bij toevoegen woordenboek item:', error);
+    alert(`Netwerkfout: ${error.message}`);
   }
 }
 
@@ -181,10 +184,6 @@ onMounted(() => {
     </section>
   </div>
 </template>
-
-<style scoped>
-/* You can keep or remove existing styles as needed */
-</style>
 
 <style scoped>
 /* You can keep or remove existing styles as needed */
