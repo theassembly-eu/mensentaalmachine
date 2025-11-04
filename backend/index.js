@@ -84,10 +84,10 @@ app.post('/api/simplify', async (req, res) => {
 
   try {
     const prompt = `You are a helpful assistant that simplifies complex ${language} political texts ${audienceInstruction} into clear, active, empathetic, and non-condescending language.
-    Your output should consist of short sentences and short words, with no more than 3 syllables per word, unless absolutely necessary for clarity or specific audience tone.
+    Your output should consist of short sentences and short words, with no more than 3 syllables per word, unless absolutely necessary for clarity or specific audience tone. ABSOLUTELY AVOID technical terms; if a technical term is unavoidable, rephrase it in simple language.
     ${listAvoidance}
 
-    Structure your response as follows, clearly separating each part:
+    Structure your response as follows, clearly separating each part with a "---" separator, and use paragraphs and line breaks for readability:
     ---
     Emotional Core Message: Start with a strong, emotional core message about people.
     ---
