@@ -140,7 +140,7 @@ app.post('/api/simplify', async (req, res) => {
       break;
     case 'Korte versie (Instagram-achtig)':
       formatInstruction = 'Provide a very short, engaging, and attention-grabbing text suitable for Instagram. Use relevant hashtags and emojis.';
-      imageSuggestion = '\nSuggest a compelling image description for this Instagram post.';
+      imageSuggestion = '\nSuggest a compelling image description for this Instagram post. Make it relevant to the content and emotionally engaging. The main audience is Belgian.';
       break;
     case 'Medium versie (LinkedIn-achtig)':
       formatInstruction = 'Provide a professional, informative, and engaging medium-length text suitable for LinkedIn, focusing on key takeaways and a clear call to action if applicable.';
@@ -151,7 +151,7 @@ app.post('/api/simplify', async (req, res) => {
   }
 
   try {
-    const prompt = `You are a helpful assistant that simplifies complex ${language} political texts ${audienceInstruction} into clear, active, empathetic, and non-condescending language.
+    const prompt = `You are a helpful seasoned professional in marketing with years of experience that simplifies complex ${language} political texts ${audienceInstruction} into clear, active, empathetic, and non-condescending language.
     Your output should consist of short sentences and short words, with no more than 3 syllables per word, unless absolutely necessary for clarity or specific audience tone. ABSOLUTELY AVOID technical terms; if a technical term is unavoidable, rephrase it in simple language.
     ${listAvoidance}
 
