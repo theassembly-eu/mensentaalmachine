@@ -29,16 +29,17 @@ if (process.env.APP_CONFIG) {
   if (config.mongo && mongoPassword) {
     mongoUri = `mongodb://${config.mongo.user}:${encodeURIComponent(mongoPassword)}@${config.mongo.hostString}`;
   } else {
-    console.error('EvenNode APP_CONFIG or MONGO_PASSWORD not properly configured.');
+    console.error('EvenNode APP_CONFIG or MONGO_PASSWORD not properly configured. Falling back to localhost.');
     mongoUri = 'mongodb://localhost:27017/mensentaalmachine'; // Fallback for local development
   }
 } else {
   mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/mensentaalmachine'; // Fallback for local development or other deployments
 }
 
+console.log('Attempting to connect to MongoDB with URI:', mongoUri);
 mongoose.connect(mongoUri)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .then(() => console.log('MongoDB connected successfully.'))
+  .catch(err => console.error('MongoDB connection error:', err.message, err));
 
 import path from 'path';
 import { fileURLToPath } from 'url';
