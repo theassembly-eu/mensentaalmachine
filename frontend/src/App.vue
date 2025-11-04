@@ -7,6 +7,7 @@ const message = ref('Hallo van de frontend!');
 const backendMessage = ref('');
 const selectedLanguage = ref('Dutch'); // New ref for selected language
 const selectedTargetAudience = ref('Algemeen'); // New ref for selected target audience
+const selectedOutputFormat = ref('Samenvatting'); // New ref for selected output format
 
 async function fetchBackendMessage() {
   try {
@@ -26,7 +27,7 @@ async function simplifyText() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text: inputText.value, language: selectedLanguage.value, targetAudience: selectedTargetAudience.value }), // Pass selected language and target audience
+      body: JSON.stringify({ text: inputText.value, language: selectedLanguage.value, targetAudience: selectedTargetAudience.value, outputFormat: selectedOutputFormat.value }), // Pass selected language, target audience, and output format
     });
     const data = await response.json();
     if (response.ok) {
@@ -62,6 +63,15 @@ onMounted(fetchBackendMessage);
       <option value="Algemeen">Algemeen</option>
       <option value="Jongeren">Jongeren</option>
       <option value="Ouderen">Ouderen</option>
+    </select>
+    <br>
+
+    <label for="output-format-select">Output Formaat:</label>
+    <select id="output-format-select" v-model="selectedOutputFormat">
+      <option value="Samenvatting">Samenvatting</option>
+      <option value="Korte versie (Instagram-achtig)">Korte versie (Instagram-achtig)</option>
+      <option value="Medium versie (LinkedIn-achtig)">Medium versie (LinkedIn-achtig)</option>
+      <option value="Opsommingstekens">Opsommingstekens</option>
     </select>
     <br>
 

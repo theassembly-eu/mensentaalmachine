@@ -39,10 +39,28 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.post('/api/simplify', async (req, res) => {
-  const { text, language = 'Dutch', targetAudience = 'Algemeen' } = req.body; // Default to Dutch and Algemeen
+  const { text, language = 'Dutch', targetAudience = 'Algemeen', outputFormat = 'Samenvatting' } = req.body; // Default to Dutch, Algemeen, and Samenvatting
 
   if (!text) {
     return res.status(400).json({ error: 'Text is required for simplification.' });
+  }
+
+  let formatInstruction = '';
+  switch (outputFormat) {
+    case 'Samenvatting':
+      formatInstruction = 'Provide a concise summary.';
+      break;
+    case 'Korte versie (Instagram-achtig)':
+      formatInstruction = 'Provide a very short version, suitable for Instagram.';
+      break;
+    case 'Medium versie (LinkedIn-achtig)':
+      formatInstruction = 'Provide a medium-length version, suitable for LinkedIn.';
+      break;
+    case 'Opsommingstekens':
+      formatInstruction = 'Provide the output in bullet points.';
+      break;
+    default:
+      formatInstruction = 'Provide a concise summary.';
   }
 
   try {
@@ -52,6 +70,7 @@ app.post('/api/simplify', async (req, res) => {
     1. Start with an emotional core message about people.
     2. Name the problem briefly.
     3. Conclude with a clear message.
+    ${formatInstruction}
 
     Please simplify the following ${language} text and respond in ${language}:
 
