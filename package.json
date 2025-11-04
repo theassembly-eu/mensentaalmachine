@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node backend/index.js",
-    "build:frontend": "npx --yes vite build --config frontend/vite.config.js --outDir dist --emptyOutDir",
+    "build:frontend": "cd frontend && npm install && vite build --outDir ../dist --emptyOutDir",
     "postinstall": "npm run build:frontend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +13,5 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "devDependencies": {
-    "vite": "^7.1.12"
-  }
+  "devDependencies": {}
 }
