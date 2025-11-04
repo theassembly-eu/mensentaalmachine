@@ -6,6 +6,7 @@ const simplifiedText = ref(''); // Added comment to force rebuild
 const message = ref('Hallo van de frontend!');
 const backendMessage = ref('');
 const selectedLanguage = ref('Dutch'); // New ref for selected language
+const selectedTargetAudience = ref('Algemeen'); // New ref for selected target audience
 
 async function fetchBackendMessage() {
   try {
@@ -25,7 +26,7 @@ async function simplifyText() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text: inputText.value, language: selectedLanguage.value }), // Pass selected language
+      body: JSON.stringify({ text: inputText.value, language: selectedLanguage.value, targetAudience: selectedTargetAudience.value }), // Pass selected language and target audience
     });
     const data = await response.json();
     if (response.ok) {
@@ -53,6 +54,14 @@ onMounted(fetchBackendMessage);
       <option value="Dutch">Nederlands</option>
       <option value="English">Engels</option>
       <option value="French">Frans</option>
+    </select>
+    <br>
+
+    <label for="target-audience-select">Doelgroep:</label>
+    <select id="target-audience-select" v-model="selectedTargetAudience">
+      <option value="Algemeen">Algemeen</option>
+      <option value="Jongeren">Jongeren</option>
+      <option value="Ouderen">Ouderen</option>
     </select>
     <br>
 
