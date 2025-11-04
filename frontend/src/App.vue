@@ -5,6 +5,7 @@ const inputText = ref('');
 const simplifiedText = ref(''); // Added comment to force rebuild
 const message = ref('Hello from frontend!');
 const backendMessage = ref('');
+const selectedLanguage = ref('Dutch'); // New ref for selected language
 
 async function fetchBackendMessage() {
   try {
@@ -24,7 +25,7 @@ async function simplifyText() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text: inputText.value }),
+      body: JSON.stringify({ text: inputText.value, language: selectedLanguage.value }), // Pass selected language
     });
     const data = await response.json();
     if (response.ok) {
@@ -46,6 +47,14 @@ onMounted(fetchBackendMessage);
     <h1>MensentaalMachine</h1>
     <p>{{ message }}</p>
     <p>{{ backendMessage }}</p>
+
+    <label for="language-select">Select Language:</label>
+    <select id="language-select" v-model="selectedLanguage">
+      <option value="Dutch">Dutch</option>
+      <option value="English">English</option>
+      <!-- Add more languages as needed -->
+    </select>
+    <br>
 
     <textarea v-model="inputText" placeholder="Enter complex Dutch text here..." rows="10" cols="50"></textarea>
     <br>

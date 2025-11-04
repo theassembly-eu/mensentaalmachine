@@ -39,21 +39,21 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.post('/api/simplify', async (req, res) => {
-  const { text } = req.body;
+  const { text, language = 'Dutch' } = req.body; // Default to Dutch if no language is provided
 
   if (!text) {
     return res.status(400).json({ error: 'Text is required for simplification.' });
   }
 
   try {
-    const prompt = `You are a helpful assistant that simplifies complex Dutch political texts into clear, active, empathetic, and non-condescending language for a broad audience, like "your uncle at the family party."
+    const prompt = `You are a helpful assistant that simplifies complex ${language} political texts into clear, active, empathetic, and non-condescending language for a broad audience, like "your uncle at the family party."
     Your output should consist of short sentences and short words, with no more than 3 syllables per word.
     Follow these three steps:
     1. Start with an emotional core message about people.
     2. Name the problem briefly.
     3. Conclude with a clear message.
 
-    Please simplify the following Dutch text:
+    Please simplify the following ${language} text and respond in ${language}:
 
     "${text}"`;
 
