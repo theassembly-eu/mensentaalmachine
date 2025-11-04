@@ -47,8 +47,6 @@ onMounted(fetchBackendMessage);
 <template>
   <div>
     <h1>MensentaalMachine</h1>
-    <p>{{ message }}</p>
-    <p>{{ backendMessage }}</p>
 
     <label for="language-select">Selecteer Taal:</label>
     <select id="language-select" v-model="selectedLanguage">
