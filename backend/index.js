@@ -28,6 +28,7 @@ mongoose.connect(mongoUri)
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import history from 'connect-history-api-fallback';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -74,10 +75,8 @@ app.post('/api/simplify', async (req, res) => {
 
 // Serve frontend (static)
 const frontendPath = path.join(__dirname, '../dist'); // dist is in the project root
+app.use(history({ index: '/index.html' }));
 app.use(express.static(frontendPath));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
-});
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend running on http://0.0.0.0:${PORT}`);
