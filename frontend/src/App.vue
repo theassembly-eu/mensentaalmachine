@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 
 const inputText = ref('');
 const simplifiedText = ref(''); // Added comment to force rebuild
-const message = ref('Hello from frontend!');
+const message = ref('Hallo van de frontend!');
 const backendMessage = ref('');
 const selectedLanguage = ref('Dutch'); // New ref for selected language
 
@@ -13,8 +13,8 @@ async function fetchBackendMessage() {
     const data = await response.json();
     backendMessage.value = data.message;
   } catch (error) {
-    console.error('Error fetching backend message:', error);
-    backendMessage.value = 'Error fetching message from backend.';
+    console.error('Fout bij ophalen backend bericht:', error);
+    backendMessage.value = 'Fout bij ophalen bericht van backend.';
   }
 }
 
@@ -31,11 +31,11 @@ async function simplifyText() {
     if (response.ok) {
       simplifiedText.value = data.simplifiedText;
     } else {
-      simplifiedText.value = `Error: ${data.error}`;
+      simplifiedText.value = `Fout: ${data.error}`;
     }
   } catch (error) {
-    console.error('Error simplifying text:', error);
-    simplifiedText.value = 'Failed to simplify text.';
+    console.error('Fout bij vereenvoudigen tekst:', error);
+    simplifiedText.value = 'Niet gelukt om tekst te vereenvoudigen.';
   }
 }
 
@@ -48,19 +48,19 @@ onMounted(fetchBackendMessage);
     <p>{{ message }}</p>
     <p>{{ backendMessage }}</p>
 
-    <label for="language-select">Select Language:</label>
+    <label for="language-select">Selecteer Taal:</label>
     <select id="language-select" v-model="selectedLanguage">
-      <option value="Dutch">Dutch</option>
-      <option value="English">English</option>
-      <!-- Add more languages as needed -->
+      <option value="Dutch">Nederlands</option>
+      <option value="English">Engels</option>
+      <option value="French">Frans</option>
     </select>
     <br>
 
-    <textarea v-model="inputText" placeholder="Enter complex Dutch text here..." rows="10" cols="50"></textarea>
+    <textarea v-model="inputText" placeholder="Voer hier complexe Nederlandse tekst in..." rows="10" cols="50"></textarea>
     <br>
-    <button @click="simplifyText">Simplify Text</button>
+    <button @click="simplifyText">Vereenvoudig Tekst</button>
 
-    <h2>Simplified Text:</h2>
+    <h2>Vereenvoudigde Tekst:</h2>
     <p>{{ simplifiedText }}</p>
   </div>
 </template>
