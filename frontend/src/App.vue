@@ -148,6 +148,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <img src="https://via.placeholder.com/150x50?text=Vooruit+Logo" alt="Vooruit Logo" style="max-width: 150px; margin-bottom: 1rem;">
     <h1>MensentaalMachine v{{ appVersion }}</h1>
 
     <label for="language-select">Selecteer Taal:</label>
