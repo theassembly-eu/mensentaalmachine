@@ -120,7 +120,11 @@ async function saveResult() {
     alert('Resultaat opgeslagen!');
   } catch (error) {
     console.error('Fout bij opslaan resultaat:', error);
-    alert(`Fout bij opslaan: ${error.response.data.message}`);
+    if (error.response) {
+      alert(`Fout bij opslaan: ${error.response.data.message}`);
+    } else {
+      alert('Fout bij opslaan: Netwerkfout. Kon de server niet bereiken.');
+    }
   }
 }
 
