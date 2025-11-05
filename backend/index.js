@@ -38,6 +38,7 @@ if (process.env.APP_CONFIG) {
 }
 
 console.log('Attempting to connect to MongoDB with URI:', mongoUri);
+console.log('MongoDB URI:', mongoUri);
 mongoose.connect(mongoUri)
   .then(() => console.log('MongoDB connected successfully.'))
   .catch(err => console.error('MongoDB connection error:', err.message, err));
