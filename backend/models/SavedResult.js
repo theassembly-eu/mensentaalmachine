@@ -9,6 +9,14 @@ const savedResultSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  targetAudience: {
+    type: String,
+    required: true,
+  },
+  outputFormat: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

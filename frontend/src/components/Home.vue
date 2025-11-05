@@ -116,6 +116,8 @@ async function saveResult() {
     await axios.post('/api/saved-results', {
       originalText: inputText.value,
       simplifiedText: simplifiedText.value,
+      targetAudience: selectedTargetAudience.value,
+      outputFormat: selectedOutputFormat.value,
     });
     alert('Resultaat opgeslagen!');
   } catch (error) {
@@ -127,10 +129,6 @@ async function saveResult() {
     }
   }
 }
-
-onMounted(() => {
-  fetchDictionaryEntries();
-});
 </script>
 
 <template>
@@ -177,33 +175,5 @@ onMounted(() => {
         <h3>Voorgestelde Tekst:</h3>
         <p v-html="parsedSimplifiedText.suggestedCopy"></p>
       </div>
-      <button @click="saveResult">Resultaat Opslaan</button>
+      <button @click="saveResult">Opslaan in geschiedenis</button>
     </div>
-    <p v-else>Nog geen vereenvoudigde tekst.</p>
-
-    <hr>
-
-    <section>
-      <h2>Woordenboek Beheer</h2>
-      <div>
-        <input type="text" v-model="newOriginalTerm" placeholder="Originele Term">
-        <input type="text" v-model="newSimplifiedTerm" placeholder="Vereenvoudigde Term">
-        <button v-if="!editingEntryId" @click="addDictionaryEntry">Toevoegen</button>
-        <button v-else @click="updateDictionaryEntry">Bijwerken</button>
-      </div>
-
-      <h3>Bestaande Items</h3>
-      <ul>
-        <li v-for="entry in dictionaryEntries" :key="entry._id">
-          {{ entry.originalTerm }} -> {{ entry.simplifiedTerm }}
-          <button @click="editDictionaryEntry(entry)">Bewerken</button>
-          <button @click="deleteDictionaryEntry(entry._id)">Verwijderen</button>
-        </li>
-      </ul>
-    </section>
-  </div>
-</template>
-
-<style scoped>
-/* You can keep or remove existing styles as needed */
-</style>

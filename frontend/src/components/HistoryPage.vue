@@ -1,6 +1,24 @@
 <template>
   <div class="history-page">
     <h2>Geschiedenis</h2>
+
+    <div class="filters">
+      <input type="text" v-model="searchQuery" placeholder="Zoeken..." @input="fetchSavedResults" />
+      <select v-model="selectedTargetAudience" @change="fetchSavedResults">
+        <option value="">Alle doelgroepen</option>
+        <option value="Algemeen">Algemeen</option>
+        <option value="Jongeren">Jongeren</option>
+        <option value="Ouderen">Ouderen</option>
+      </select>
+      <select v-model="selectedOutputFormat" @change="fetchSavedResults">
+        <option value="">Alle output formaten</option>
+        <option value="Samenvatting">Samenvatting</option>
+        <option value="Korte versie (Instagram-achtig)">Korte versie (Instagram-achtig)</option>
+        <option value="Medium versie (LinkedIn-achtig)">Medium versie (LinkedIn-achtig)</option>
+        <option value="Opsommingstekens">Opsommingstekens</option>
+      </select>
+    </div>
+
     <div v-if="loading" class="loading">Laden...</div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="savedResults.length === 0 && !loading" class="no-results">
@@ -17,7 +35,7 @@
           <pre>{{ result.simplifiedText }}</pre>
         </div>
         <div class="result-footer">
-          <span>Opgeslagen op: {{ new Date(result.createdAt).toLocaleString() }}</span>
+          <span>Doelgroep: {{ result.targetAudience }} | Output Formaat: {{ result.outputFormat }} | Opgeslagen op: {{ new Date(result.createdAt).toLocaleString() }}</span>
           <button @click="deleteResult(result._id)" class="delete-btn">Verwijder</button>
         </div>
       </li>
@@ -35,10 +53,18 @@ export default {
     const savedResults = ref([]);
     const loading = ref(true);
     const error = ref(null);
+    const searchQuery = ref('');
+    const selectedTargetAudience = ref('');
+    const selectedOutputFormat = ref('');
 
     const fetchSavedResults = async () => {
       try {
-        const response = await axios.get('/api/saved-results');
+        const params = {
+          search: searchQuery.value,
+          targetAudience: selectedTargetAudience.value,
+          outputFormat: selectedOutputFormat.value,
+        };
+        const response = await axios.get('/api/saved-results', { params });
         savedResults.value = response.data;
       } catch (err) {
         error.value = 'Fout bij het ophalen van opgeslagen resultaten.';
@@ -67,6 +93,10 @@ export default {
       savedResults,
       loading,
       error,
+      searchQuery,
+      selectedTargetAudience,
+      selectedOutputFormat,
+      fetchSavedResults,
       deleteResult,
     };
   },
@@ -82,6 +112,12 @@ export default {
 
 h2 {
   text-align: center;
+  margin-bottom: 2rem;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 2rem;
 }
 

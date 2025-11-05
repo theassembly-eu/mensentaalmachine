@@ -174,7 +174,8 @@ app.post('/api/simplify', async (req, res) => {
 // Saved Results CRUD routes
 app.post('/api/saved-results', async (req, res) => {
   try {
-    const newSavedResult = new SavedResult(req.body);
+    const { originalText, simplifiedText, targetAudience, outputFormat } = req.body;
+    const newSavedResult = new SavedResult({ originalText, simplifiedText, targetAudience, outputFormat });
     await newSavedResult.save();
     res.status(201).json(newSavedResult);
   } catch (error) {
@@ -184,7 +185,21 @@ app.post('/api/saved-results', async (req, res) => {
 
 app.get('/api/saved-results', async (req, res) => {
   try {
-    const savedResults = await SavedResult.find().sort({ createdAt: -1 });
+    const { search, targetAudience, outputFormat } = req.query;
+    let query = {};
+    if (search) {
+      query.$or = [
+        { originalText: { $regex: search, $options: 'i' } },
+        { simplifiedText: { $regex: search, $options: 'i' } },
+      ];
+    }
+    if (targetAudience) {
+      query.targetAudience = targetAudience;
+    }
+    if (outputFormat) {
+      query.outputFormat = outputFormat;
+    }
+    const savedResults = await SavedResult.find(query).sort({ createdAt: -1 });
     res.json(savedResults);
   } catch (error) {
     res.status(500).json({ message: error.message });
