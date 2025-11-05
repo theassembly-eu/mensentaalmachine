@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "npm run build && node backend/index.js",
-    "build": "cd frontend && vite build",
+    "build": "cd frontend && npm install && vite build",
     "dev": "concurrently \"cd frontend && vite\" \"node backend/index.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
