@@ -295,7 +295,7 @@ button:focus-visible {
 
   /* Navigation links in dark mode */
   nav a {
-    color: var(--vooruit-white); /* Ensure links are white for readability */
+    color: lightslategrey; /* Lighter color for better readability */
   }
   nav a.router-link-exact-active {
     color: var(--vooruit-red); /* Active link in Vooruit Red */
