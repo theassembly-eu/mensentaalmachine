@@ -242,13 +242,13 @@ button:focus-visible {
     color: var(--vooruit-white);
   }
   p {
-    color: #cccccc;
+    color: #e0e0e0; /* Lighter gray for better readability */
   }
   select,
   textarea,
   input[type="text"] {
-    background-color: #3a3a3a;
-    border-color: #555;
+    background-color: #4a4a4a; /* Lighter dark background */
+    border-color: #666;
     color: var(--vooruit-white);
   }
   button {
@@ -258,8 +258,8 @@ button:focus-visible {
     background-color: #cc0000;
   }
   .simplified-text-container {
-    background-color: #3a3a3a;
-    border-color: #555;
+    background-color: #4a4a4a; /* Lighter dark background */
+    border-color: #666;
   }
   .tldr-section h3,
   .suggested-copy-section h3 {
@@ -267,27 +267,36 @@ button:focus-visible {
   }
   .tldr-section p,
   .suggested-copy-section p {
-    color: #cccccc;
+    color: #e0e0e0; /* Lighter gray for better readability */
   }
   .result-item {
-    background: #3a3a3a;
-    border-color: #555;
+    background: #4a4a4a; /* Lighter dark background */
+    border-color: #666;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
   .result-item strong {
     color: var(--vooruit-white);
   }
   .result-item pre {
-    background: #4a4a4a;
-    color: #cccccc;
+    background: #5a5a5a; /* Even lighter dark background */
+    color: #e0e0e0; /* Lighter gray for better readability */
   }
   .result-footer {
-    color: #aaaaaa;
+    color: #cccccc; /* Lighter gray for better readability */
   }
   .result-footer .delete-btn {
     background: #dc3545;
   }
   .result-footer .delete-btn:hover {
     background: #c82333;
+  }
+
+  /* Navigation links in dark mode */
+  nav a {
+    color: var(--vooruit-white); /* Ensure links are white */
+  }
+
+  nav a.router-link-exact-active {
+    color: var(--vooruit-red); /* Active link in Vooruit Red */
   }
 }
